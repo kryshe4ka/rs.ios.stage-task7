@@ -8,27 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		3D374E28268E4EB600C86470 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D374E27268E4EB600C86470 /* AppDelegate.m */; };
-		3D374E2B268E4EB600C86470 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D374E2A268E4EB600C86470 /* SceneDelegate.m */; };
 		3D374E2E268E4EB600C86470 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D374E2D268E4EB600C86470 /* ViewController.m */; };
 		3D374E33268E4EB700C86470 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D374E32268E4EB700C86470 /* Assets.xcassets */; };
 		3D374E36268E4EB700C86470 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D374E34268E4EB700C86470 /* LaunchScreen.storyboard */; };
 		3D374E39268E4EB700C86470 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D374E38268E4EB700C86470 /* main.m */; };
-		3D374E40268E51C200C86470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D374E3F268E51C200C86470 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3D374E23268E4EB600C86470 /* rs.ios.stage-task7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "rs.ios.stage-task7.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D374E26268E4EB600C86470 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3D374E27268E4EB600C86470 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		3D374E29268E4EB600C86470 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		3D374E2A268E4EB600C86470 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		3D374E2C268E4EB600C86470 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3D374E2D268E4EB600C86470 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		3D374E32268E4EB700C86470 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D374E35268E4EB700C86470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D374E37268E4EB700C86470 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D374E38268E4EB700C86470 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3D374E3F268E51C200C86470 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,15 +58,12 @@
 			children = (
 				3D374E26268E4EB600C86470 /* AppDelegate.h */,
 				3D374E27268E4EB600C86470 /* AppDelegate.m */,
-				3D374E29268E4EB600C86470 /* SceneDelegate.h */,
-				3D374E2A268E4EB600C86470 /* SceneDelegate.m */,
 				3D374E2C268E4EB600C86470 /* ViewController.h */,
 				3D374E2D268E4EB600C86470 /* ViewController.m */,
 				3D374E32268E4EB700C86470 /* Assets.xcassets */,
 				3D374E34268E4EB700C86470 /* LaunchScreen.storyboard */,
 				3D374E37268E4EB700C86470 /* Info.plist */,
 				3D374E38268E4EB700C86470 /* main.m */,
-				3D374E3F268E51C200C86470 /* Main.storyboard */,
 			);
 			path = "rs.ios.stage-task7";
 			sourceTree = "<group>";
@@ -132,7 +124,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D374E40268E51C200C86470 /* Main.storyboard in Resources */,
 				3D374E36268E4EB700C86470 /* LaunchScreen.storyboard in Resources */,
 				3D374E33268E4EB700C86470 /* Assets.xcassets in Resources */,
 			);
@@ -148,7 +139,6 @@
 				3D374E2E268E4EB600C86470 /* ViewController.m in Sources */,
 				3D374E28268E4EB600C86470 /* AppDelegate.m in Sources */,
 				3D374E39268E4EB700C86470 /* main.m in Sources */,
-				3D374E2B268E4EB600C86470 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
