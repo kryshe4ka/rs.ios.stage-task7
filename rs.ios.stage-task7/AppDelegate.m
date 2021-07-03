@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -15,7 +16,19 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    // 0. в info.plist удалила связь со сторибордом и SceneDelegate!
+    // 1. создаем окно размером с экран
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+
+    // 2. назначаем наш контроллер рутовым контроллером
+    ViewController *rootVC = [[ViewController alloc] init];
+    [window setRootViewController:rootVC];
+    
+    // 3. делаем созданное окно видимым
+    self.window = window;
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 
