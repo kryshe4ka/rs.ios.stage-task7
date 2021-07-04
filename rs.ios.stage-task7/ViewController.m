@@ -75,7 +75,11 @@ int colorLittleBoyBlue = 0x80A4ED;
     loginTextField.leftViewMode = UITextFieldViewModeAlways;
     // клавиатура с маленькой буквы:
     loginTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-
+    
+    // добавляем действие при начале редактирования в поле
+    [loginTextField addTarget:self
+                       action:@selector(textFieldEditingDidBegin:)
+             forControlEvents:UIControlEventEditingChanged];
     return loginTextField;
 }
 
@@ -92,6 +96,13 @@ int colorLittleBoyBlue = 0x80A4ED;
     passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     // клавиатура с маленькой буквы:
     passwordTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    // экранирование пароля
+    passwordTextField.secureTextEntry = YES;
+    
+    // добавляем действие при начале редактирования в поле
+    [passwordTextField addTarget:self
+                       action:@selector(textFieldEditingDidBegin:)
+             forControlEvents:UIControlEventEditingChanged];
     return passwordTextField;
 }
 
@@ -111,7 +122,7 @@ int colorLittleBoyBlue = 0x80A4ED;
     [authorizeButton  setBackgroundColor:UIColorFromRGBWithAlpha(colorLittleBoyBlue, 0.2) forState:UIControlStateHighlighted];
     // вид кнопки для состояния disabled
     [authorizeButton setTitleColor: UIColorFromRGBWithAlpha(colorLittleBoyBlue, 0.5) forState: UIControlStateDisabled];
-    if (!authorizeButton.enabled) {
+    if (!authorizeButton.isEnabled) {
         authorizeButton.layer.borderColor = UIColorFromRGBWithAlpha(colorLittleBoyBlue, 0.5).CGColor;
     } else {
         authorizeButton.layer.borderColor = UIColorFromRGBWithAlpha(colorLittleBoyBlue, 1.0).CGColor;
@@ -136,8 +147,8 @@ int colorLittleBoyBlue = 0x80A4ED;
     
     // добавляем ивент
     [authorizeButton addTarget:self
-                             action:@selector(authorizeButtonTapped:)
-                   forControlEvents:UIControlEventTouchUpInside];
+                        action:@selector(authorizeButtonTapped:)
+              forControlEvents:UIControlEventTouchUpInside];
     return authorizeButton;
 }
 
@@ -150,6 +161,10 @@ int colorLittleBoyBlue = 0x80A4ED;
     // вид кнопки для состояния highlighted
     button.clipsToBounds = YES;
     [button setBackgroundColor:UIColorFromRGBWithAlpha(colorLittleBoyBlue, 0.2) forState:UIControlStateHighlighted];
+    // добавляем ивент
+    [button addTarget:self
+                        action:@selector(secureButtonTapped:)
+              forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(UILabel *)createResultSecureField {
@@ -158,11 +173,6 @@ int colorLittleBoyBlue = 0x80A4ED;
     [resultSecureField setText:@"_"];
     resultSecureField.textAlignment = NSTextAlignmentCenter;
     resultSecureField.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
-    
-    //    secureView.layer.borderWidth = 2;
-    //    secureView.layer.borderColor = UIColorFromRGB(colorTurquoiseGreen).CGColor;
-    //    secureView.layer.borderColor = UIColorFromRGB(colorVenetianRed).CGColor;
-
     return resultSecureField;
 }
 -(UIView *)createSecureView {
@@ -173,10 +183,7 @@ int colorLittleBoyBlue = 0x80A4ED;
     return secureView;
 }
 
-
-// <------- VIEW DID LOAD ---------->
-// <------- VIEW DID LOAD ---------->
-// <------- VIEW DID LOAD ---------->
+// MARK: - View Did Load
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -223,25 +230,64 @@ int colorLittleBoyBlue = 0x80A4ED;
     self.loginTextField.delegate = self;
     self.passwordTextField.delegate = self;
 }
-
+-(void)textFieldEditingDidBegin:(UIButton *)sender {
+    sender.layer.borderColor = UIColorFromRGB(colorBlackCoral).CGColor;
+}
 - (void)authorizeButtonTapped:(UIButton *)sender {
     NSString * login = self.loginTextField.text;
     NSString * password = self.passwordTextField.text;
 
-    if ([login isEqualToString:@"login"]) {
-        NSLog(@"верный логин");
+    if ([login isEqualToString:@"username"]) {
+        self.loginTextField.layer.borderColor = UIColorFromRGBWithAlpha(colorTurquoiseGreen, 1).CGColor;
     } else {
-        NSLog(@"логин не верный  %@", self.loginTextField.text);
+        self.loginTextField.layer.borderColor = UIColorFromRGBWithAlpha(colorVenetianRed, 1).CGColor;
     }
-
-
+    if ([password isEqualToString:@"password"]) {
+        self.passwordTextField.layer.borderColor = UIColorFromRGBWithAlpha(colorTurquoiseGreen, 1).CGColor;
+    } else {
+        self.passwordTextField.layer.borderColor = UIColorFromRGBWithAlpha(colorVenetianRed, 1).CGColor;
+    }
+    if ([login isEqualToString:@"username"] && [password isEqualToString:@"password"]) {
+        [self.loginTextField setEnabled:NO];
+        [self.passwordTextField setEnabled:NO];
+        [self.authorizeButton setEnabled:NO];
+        self.authorizeButton.layer.borderColor = UIColorFromRGBWithAlpha(colorLittleBoyBlue, 0.5).CGColor;
+        self.loginTextField.alpha = 0.5;
+        self.passwordTextField.alpha = 0.5;
+        [self.secureView setHidden:NO];
+    }
+}
+- (void)secureButtonTapped:(UIButton *)sender {
+    if ([self.resultSecureField.text isEqualToString:@"_"]) {
+        self.resultSecureField.text = @"";
+        self.secureView.layer.borderWidth = 0;
+    }
+    if (self.resultSecureField.text.length != 3) {
+        self.resultSecureField.text = [self.resultSecureField.text stringByAppendingString:sender.titleLabel.text];
+    }
+    
+    if (self.resultSecureField.text.length == 3) {
+        if ([self.resultSecureField.text isEqualToString:@"132"]) {
+            self.secureView.layer.borderWidth = 2;
+            self.secureView.layer.borderColor = UIColorFromRGB(colorTurquoiseGreen).CGColor;
+            NSLog(@"КОНЕЦ! должно появиться окно рефреш");
+        } else {
+            self.secureView.layer.borderWidth = 2;
+            self.secureView.layer.borderColor = UIColorFromRGB(colorVenetianRed).CGColor;
+            self.resultSecureField.text = @"_";
+        }
+    }
 }
 
 // MARK: - Delegates
 
 // TextField
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    return [self.passwordTextField becomeFirstResponder];
+    if (self.passwordTextField.isFirstResponder) {
+        return [self.view endEditing:true];
+    } else {
+        return [self.passwordTextField becomeFirstResponder];
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -252,7 +298,7 @@ int colorLittleBoyBlue = 0x80A4ED;
     // чтобы работало удаление символов:
     if ([string length] == 0)
             return YES;
-    
+    // фильтрация ввода, допустимы только латинские буквы
     if ([components count] > 1) {
         return YES;
     } else {
@@ -260,18 +306,11 @@ int colorLittleBoyBlue = 0x80A4ED;
     }
 }
 
-//// TextView
-//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-//    return ![text containsString:@"a"];
-//}
-
 @end
-
 
 // MARK: - Keyboard category
 
 @implementation ViewController (KeyboardHandling)
-
 - (void)subscribeOnKeyboardEvents {
     // Keyboard will show
     [NSNotificationCenter.defaultCenter addObserver:self
@@ -296,22 +335,8 @@ int colorLittleBoyBlue = 0x80A4ED;
 }
 
 - (void)keybaordWillShow:(NSNotification *)notification {
-    CGRect rect = [(NSValue *)notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-
-    //[self updateTopContraintWith:15.0 andBottom:rect.size.height - self.view.safeAreaInsets.bottom + 15.0];
 }
 
 - (void)keybaordWillHide:(NSNotification *)notification {
-    //[self updateTopContraintWith:200.0 andBottom:0.0];
 }
-
-//- (void)updateTopContraintWith:(CGFloat) constant andBottom:(CGFloat) bottomConstant {
-//    // Change your constraint constants
-//    self.topContraint.constant = constant;
-//    self.bottomContraint.constant = bottomConstant;
-//    [UIView animateWithDuration:0.2 animations:^{
-//        [self.view layoutIfNeeded];
-//    }];
-//}
-
 @end
