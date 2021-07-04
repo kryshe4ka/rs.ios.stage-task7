@@ -259,6 +259,7 @@ int colorLittleBoyBlue = 0x80A4ED;
 }
 - (void)secureButtonTapped:(UIButton *)sender {
     if ([self.resultSecureField.text isEqualToString:@"_"]) {
+        // устанавливаем состояние ready
         self.resultSecureField.text = @"";
         self.secureView.layer.borderWidth = 0;
     }
@@ -268,17 +269,46 @@ int colorLittleBoyBlue = 0x80A4ED;
     
     if (self.resultSecureField.text.length == 3) {
         if ([self.resultSecureField.text isEqualToString:@"132"]) {
+            // устанавливаем состояние success
             self.secureView.layer.borderWidth = 2;
             self.secureView.layer.borderColor = UIColorFromRGB(colorTurquoiseGreen).CGColor;
-            NSLog(@"КОНЕЦ! должно появиться окно рефреш");
+            
+            // добавляем алерт
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Welcome" message:@"You are successfuly authorized!" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction * refreshAction = [UIAlertAction actionWithTitle:@"Refresh" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                // возвращаем все в начальное состояние
+                [self setInitialState];
+            }];
+            // добавляем кнопку в алерт
+            [alert addAction:refreshAction];
+            [self presentViewController:alert animated:YES completion:nil];
         } else {
+            // устанавливаем состояние error
             self.secureView.layer.borderWidth = 2;
             self.secureView.layer.borderColor = UIColorFromRGB(colorVenetianRed).CGColor;
             self.resultSecureField.text = @"_";
         }
     }
 }
-
+-(void)setInitialState {
+    // начальные значения для secureView
+    [self.resultSecureField setText:@"_"];
+    self.secureView.layer.borderWidth = 0;
+    [self.secureView setHidden:YES];
+    // начальные значения для text fields
+    [self.loginTextField setEnabled:YES];
+    [self.loginTextField setText:@""];
+    [self.passwordTextField setText:@""];
+    self.loginTextField.layer.borderColor = UIColorFromRGBWithAlpha(colorBlackCoral, 1).CGColor;
+    self.passwordTextField.layer.borderColor = UIColorFromRGBWithAlpha(colorBlackCoral, 1).CGColor;
+    [self.passwordTextField setEnabled:YES];
+    self.loginTextField.alpha = 1;
+    self.passwordTextField.alpha = 1;
+    // начальное состояние кнопки
+    [self.authorizeButton setEnabled:YES];
+    self.authorizeButton.layer.borderColor = UIColorFromRGBWithAlpha(colorLittleBoyBlue, 1).CGColor;
+    
+}
 // MARK: - Delegates
 
 // TextField
